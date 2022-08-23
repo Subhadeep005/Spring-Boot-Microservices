@@ -1,0 +1,5 @@
+package io.javabrains.movieratingdataservice.models;
+
+public class UserRating {
+
+}

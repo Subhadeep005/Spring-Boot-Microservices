@@ -1,0 +1,9 @@
+package io.javabrains.movieratingdataservice.models;
+
+import java.util.List;
+
+public class UserRating {
+	
+	private List<Rating> userRating;
+
+}

@@ -1,0 +1,17 @@
+spring:
+   security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 631166571384817
+            client-secret: 97dd866e1f5dcaa9622ef10c14ba9275
+            redirect-uri: http://localhost:8080
+            
+        provider:
+          facebook:
+            token-uri: https://graph.facebook.com/oauth/access_token
+            authorization-uri:  https://www.facebook.com/dialog/oauth
+            user-info-uri: https://graph.facebook.com/me
+
+         

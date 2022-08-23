@@ -1,0 +1,13 @@
+1653316846294	Copy package
+1653316862093	Rename type 'Topic'
+1653316876544	Rename type 'TopicController'
+1653316886580	Rename type 'TopicRepository'
+1653316896831	Rename type 'TopicService'
+1653318430565	Encapsulate field 'topic'
+1653318813238	Copy package
+1653318821056	Delete element
+1653471439051	Copy package
+1653471470877	Rename type 'Course'
+1653471482554	Rename type 'CourseController'
+1653471494466	Rename type 'CourseRepository'
+1653471508197	Rename type 'CourseService'

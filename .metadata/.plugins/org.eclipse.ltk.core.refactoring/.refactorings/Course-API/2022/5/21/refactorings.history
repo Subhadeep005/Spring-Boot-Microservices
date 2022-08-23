@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;io.javabrains.springbootstarter.topic&apos; to &apos;Course-Api-Data/src/main/java&apos;&#x0D;&#x0A;- Original project: &apos;Course-API&apos;&#x0D;&#x0A;- Destination element: &apos;Course-Api-Data/src/main/java&apos;&#x0D;&#x0A;- Original element: &apos;Course-API/src/main/java/io.javabrains.springbootstarter.topic&apos;" description="Copy package" destination="=Course-Api-Data/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;io.javabrains.springbootstarter.topic" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1653127728583" version="1.0"/>
+</session>

@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-StudentApiApplication<Student-Api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "io.student.StudentApiApplication",
+            "projectName": "Student-Api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MovieCatalogServiceMicroservice1Application<Movie-Catalog-Service-Microservice1>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "io.javabrains.moviecatalogservice.MovieCatalogServiceMicroservice1Application",
+            "projectName": "Movie-Catalog-Service-Microservice1",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
