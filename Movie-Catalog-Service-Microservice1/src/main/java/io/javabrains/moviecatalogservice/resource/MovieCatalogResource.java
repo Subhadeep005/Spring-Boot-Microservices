@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
 import io.javabrains.moviecatalogservice.models.CatalogItem;
 import io.javabrains.moviecatalogservice.models.Movie;
 import io.javabrains.moviecatalogservice.models.Rating;
@@ -26,6 +28,7 @@ public class MovieCatalogResource {
 	private WebClient.Builder webClientBuilder;
 
 	@RequestMapping("/{userId}")
+	@HystrixCommand(fallbackMethod = "getFallbackCatalog")
 	public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
 
 		// get all rated movie IDs
@@ -35,12 +38,12 @@ public class MovieCatalogResource {
 		UserRating ratings = restTemplate.getForObject("http://rating-data-service/ratingsdata/users/" + userId,
 				UserRating.class);
 
-		return ratings.getUserRating().stream().map(rating -> {
+		return ratings.getRatings().stream().map(rating -> {
 			// for each movie ID, call movie info service and get details
 			Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
 
 			// put them all together
-			return new CatalogItem(movie.getName(), "Desc", rating.getRating());
+			return new CatalogItem(movie.getName(), movie.getDescription(), rating.getRating());
 		}).collect(Collectors.toList());
 
 		/*
@@ -49,5 +52,9 @@ public class MovieCatalogResource {
 		 * rating.getMovieId()) .retrieve().bodyToMono(Movie.class).block();
 		 */
 
+	}
+	
+	public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String userId) {
+		return Arrays.asList(new CatalogItem("No Movie", "", 0));
 	}
 }
