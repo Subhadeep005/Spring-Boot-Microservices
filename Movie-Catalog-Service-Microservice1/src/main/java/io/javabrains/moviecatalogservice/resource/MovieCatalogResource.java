@@ -17,34 +17,35 @@ import io.javabrains.moviecatalogservice.models.CatalogItem;
 import io.javabrains.moviecatalogservice.models.Movie;
 import io.javabrains.moviecatalogservice.models.Rating;
 import io.javabrains.moviecatalogservice.models.UserRating;
+import io.javabrains.moviecatalogservice.service.MovieInfo;
+import io.javabrains.moviecatalogservice.service.UserRatingInfo;
 
 @RestController
 @RequestMapping("/catalog")
 public class MovieCatalogResource {
 
 	@Autowired
-	private RestTemplate restTemplate;
-	@Autowired
 	private WebClient.Builder webClientBuilder;
 
+	@Autowired
+	private MovieInfo movieInfo;
+
+	@Autowired
+	private UserRatingInfo UserRatingInfo;
+
 	@RequestMapping("/{userId}")
-	@HystrixCommand(fallbackMethod = "getFallbackCatalog")
+	// @HystrixCommand(fallbackMethod = "getFallbackCatalog")
 	public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
 
 		// get all rated movie IDs
 		// List<Rating> ratings = Arrays.asList(new Rating("1234", 4), new
 		// Rating("5678", 3));
 
-		UserRating ratings = restTemplate.getForObject("http://rating-data-service/ratingsdata/users/" + userId,
-				UserRating.class);
+		UserRating userRatings = UserRatingInfo.getUserRating(userId);
 
-		return ratings.getRatings().stream().map(rating -> {
-			// for each movie ID, call movie info service and get details
-			Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
-
-			// put them all together
-			return new CatalogItem(movie.getName(), movie.getDescription(), rating.getRating());
-		}).collect(Collectors.toList());
+		return userRatings.getRatings().stream()
+				// for each movie ID, call movie info service and get details
+				.map(rating -> movieInfo.getCatalogItem(rating)).collect(Collectors.toList());
 
 		/*
 		 * Movie movie =
@@ -53,8 +54,9 @@ public class MovieCatalogResource {
 		 */
 
 	}
-	
-	public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String userId) {
-		return Arrays.asList(new CatalogItem("No Movie", "", 0));
-	}
+
+	/*
+	 * public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String
+	 * userId) { return Arrays.asList(new CatalogItem("No Movie", "", 0)); }
+	 */
 }
